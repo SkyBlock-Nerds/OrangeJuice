@@ -3,7 +3,8 @@ name: Java CI
 on:
   push:
     branches:
-      - '*'
+      - 'main'
+      - 'dev'
     paths:
       - '**.java'
       - 'pom.xml'
