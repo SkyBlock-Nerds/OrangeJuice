@@ -6,6 +6,7 @@ import net.hypixel.orangejuice.config.AppConfig;
 import net.hypixel.orangejuice.internalapi.Environment;
 import net.hypixel.orangejuice.metrics.PrometheusMetrics;
 import net.hypixel.orangejuice.util.JsonUtil;
+import net.hypixel.orangejuice.util.Util;
 import net.hypixel.orangejuice.util.json.adapter.ColorTypeAdapter;
 import net.hypixel.orangejuice.util.json.adapter.InstantTypeAdapter;
 import net.hypixel.orangejuice.util.json.adapter.UUIDTypeAdapter;
@@ -30,8 +31,12 @@ public class NerdBotApiApp {
 
     private static final String CERT_DIR = "/etc/ssl/certs";
     private static final String KEYSTORE_PATH = "/app/keystore.p12";
-    private static final String KEYSTORE_PASSWORD = "your-password";
     private static final String ALIAS = "ssl-certificate";
+    private static final String KEYSTORE_PASSWORD;
+
+    static {
+        KEYSTORE_PASSWORD = Util.isNullOrBlank(System.getProperty("server.ssl.key-store-password")) ? "default-password" : System.getProperty("server.ssl.key-store-password");
+    }
 
     public static final Gson GSON = new GsonBuilder() // TODO: check if all adapters are needed (i (socks) dont understand gson)
         .setPrettyPrinting()
@@ -85,7 +90,13 @@ public class NerdBotApiApp {
         File privkey = new File(CERT_DIR, "privkey.pem");
         File chain = new File(CERT_DIR, "chain.pem");
 
+        log.info("keystore pass: " + KEYSTORE_PASSWORD);
+        log.info("fullchain can read: " + fullchain.canRead());
+        log.info("privkey can read: " + privkey.canRead());
+        log.info("chain can read: " + chain.canRead());
+
         if (fullchain.exists() && privkey.exists() && chain.exists()) {
+            log.info("Starting SSL setup");
             try {
                 ProcessBuilder processBuilder = new ProcessBuilder(
                     "openssl", "pkcs12", "-export",
@@ -101,12 +112,12 @@ public class NerdBotApiApp {
                 Process process = processBuilder.start();
                 if (process.waitFor() == 0) {
                     System.setProperty("server.ssl.key-store", KEYSTORE_PATH);
-                    System.setProperty("server.ssl.key-store-password", KEYSTORE_PASSWORD);
                     System.setProperty("server.ssl.key-store-type", "PKCS12");
                     System.setProperty("server.ssl.key-alias", ALIAS);
                 } else {
                     throw new RuntimeException("Failed to generate keystore");
                 }
+                log.info("Finished SSL setup");
             } catch (IOException | InterruptedException e) {
                 throw new RuntimeException("Error setting up SSL", e);
             }

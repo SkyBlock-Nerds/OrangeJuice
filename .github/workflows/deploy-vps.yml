@@ -5,6 +5,7 @@
 # Requirements:
 # - These secrets must be set up in the repository settings:
 #   - SSH_PRIVATE_KEY: Private SSH key for accessing the vps
+#   - KEY_STORE_PASS: Password for the keystore
 # - These variables must be set up in the repository settings:
 #   - SSH_USER: The SSH username for the vps
 #   - SSH_HOST: The SSH host (IP or domain) of the vps
@@ -27,7 +28,10 @@ on:
         description: 'Environment type (for image/container name):'
         type: string
       pathToSSLCertificate:
-        description: 'Path To SSL certificate folder:'
+        description: 'Path to SSL certificate folder:'
+        type: string
+      pathToConfigFile:
+        description: 'Path to Config file:'
         type: string
   push:
     branches:
@@ -38,11 +42,12 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository_owner }}/orangejuice-${{ github.event.inputs.environmentType || 'PRODUCTION' }}-${{ github.ref_name }}:latest
+  IMAGE_NAME: ${{ github.repository_owner }}/orangejuice-${{ github.event.inputs.environmentType || 'PRODUCTION' }}-${{ github.ref_name }}
   CONTAINER_NAME: orangejuice-${{ github.event.inputs.environmentType || 'PRODUCTION' }}-${{ github.ref_name }}
   OUTER_PORT: ${{ github.event.inputs.outerPort || '8080' }}
   USE_OLD_IMAGE: ${{ github.event.inputs.useOldImage || 'false' }}
   PATH_TO_SSL_CERTIFICATE: ${{ github.event.inputs.pathToSSLCertificate || vars.PATH_TO_SSL_CERTIFICATE }}
+  PATH_TO_CONFIG_FILE: ${{ github.event.inputs.pathToConfigFile || vars.PATH_TO_CONFIG_FILE }}
 
 jobs:
   publish:
@@ -61,9 +66,9 @@ jobs:
       - name: Build and push Docker image
         if: ${{ env.USE_OLD_IMAGE == 'false' }}
         run: |
-          docker build . --tag ${{ env.REGISTRY }}/$(echo "${{ env.IMAGE_NAME }}" | tr '[:upper:]' '[:lower:]') \
+          docker build . --tag ${{ env.REGISTRY }}/$(echo "${{ env.IMAGE_NAME }}:latest" | tr '[:upper:]' '[:lower:]') \
             --build-arg ENV_FILE=.env
-          docker push ${{ env.REGISTRY }}/$(echo "${{ env.IMAGE_NAME }}" | tr '[:upper:]' '[:lower:]')
+          docker push ${{ env.REGISTRY }}/$(echo "${{ env.IMAGE_NAME }}:latest" | tr '[:upper:]' '[:lower:]')
 
   deploy:
     needs: publish
@@ -82,18 +87,20 @@ jobs:
         run: |
           ssh ${{ vars.SSH_USER }}@${{ vars.SSH_HOST }} << 'EOF'
           echo "${{ secrets.GITHUB_TOKEN }}" | sudo docker login ${{ env.REGISTRY }} -u ${{ github.actor }} --password-stdin
-          sudo docker pull ${{ env.REGISTRY }}/$(echo "${{ env.IMAGE_NAME }}" | tr '[:upper:]' '[:lower:]')
+          sudo docker pull ${{ env.REGISTRY }}/$(echo "${{ env.IMAGE_NAME }}:latest" | tr '[:upper:]' '[:lower:]')
           sudo docker stop $(echo "${{ env.CONTAINER_NAME }}" | tr '[:upper:]' '[:lower:]' | tr '/' '-') || true
           sudo docker rm $(echo "${{ env.CONTAINER_NAME }}" | tr '[:upper:]' '[:lower:]' | tr '/' '-') || true
           sudo docker rmi $(sudo docker images $(echo "${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}" | tr '[:upper:]' '[:lower:]') -q) -f || true
           sudo docker run -d \
             --name $(echo "${{ env.CONTAINER_NAME }}" | tr '[:upper:]' '[:lower:]' | tr '/' '-') \
             --restart unless-stopped \
-            -v ${{ vars.PATH_TO_SSL_CERTIFICATE }}/fullchain.pem:/fullchain.pem:ro \
-            -v ${{ vars.PATH_TO_SSL_CERTIFICATE }}/privkey.pem:/privkey.pem:ro \
-            -v ${{ vars.PATH_TO_SSL_CERTIFICATE }}/chain.pem:/chain.pem:ro \
+            -v ${{ env.PATH_TO_SSL_CERTIFICATE }}/fullchain.pem:/etc/ssl/certs/fullchain.pem:ro \
+            -v ${{ env.PATH_TO_SSL_CERTIFICATE }}/privkey.pem:/etc/ssl/certs/privkey.pem:ro \
+            -v ${{ env.PATH_TO_SSL_CERTIFICATE }}/chain.pem:/etc/ssl/certs/chain.pem:ro \
+            -v ${{ env.PATH_TO_CONFIG_FILE }}:/app/dev.config.json:ro \
+            -e JAVA_OPTS="-Dserver.ssl.key-store-password=${{ secrets.KEY_STORE_PASS }}" \
             -p ${{ env.OUTER_PORT }}:8080 \
-            ${{ env.REGISTRY }}/$(echo "${{ env.IMAGE_NAME }}" | tr '[:upper:]' '[:lower:]')
+            ${{ env.REGISTRY }}/$(echo "${{ env.IMAGE_NAME }}:latest" | tr '[:upper:]' '[:lower:]')
           EOF
 
       - name: Cleanup SSH keys
