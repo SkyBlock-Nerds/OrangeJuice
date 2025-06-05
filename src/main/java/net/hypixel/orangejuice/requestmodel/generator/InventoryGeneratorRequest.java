@@ -17,10 +17,10 @@ public class InventoryGeneratorRequest {
     private InventoryItem[] inventoryItems;
 
     @Schema(description = "The number of rows in the inventory", example = "6", requiredMode = Schema.RequiredMode.REQUIRED)
-    private int rows;
+    private Integer rows;
 
     @Schema(description = "The number of slots per row in the inventory", example = "9", requiredMode = Schema.RequiredMode.REQUIRED)
-    private int columns;
+    private Integer columns;
 
     @Schema(description = "The hovered item string to be used for the generation", example = "Insane inventory item description!!!!!", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
     private String hoveredItemString;
@@ -29,5 +29,5 @@ public class InventoryGeneratorRequest {
     private String containerName;
 
     @Schema(description = RENDER_BORDER_DESCRIPTION, example = RENDER_BORDER_EXAMPLE, requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-    private boolean renderBorder;
+    private Boolean renderBorder;
 }

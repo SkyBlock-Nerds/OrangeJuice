@@ -19,7 +19,7 @@ public class InventoryItem {
     private List<ItemLocation> locations;
 
     @Schema(description = "The amount of the item", example = "3", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-    private int amount;
+    private Integer amount;
 
     @Schema(description = "Extra attributes for the item", example = "[\"enchanted\", \"hover\"]", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
     private String[] extraData;

@@ -33,7 +33,7 @@ public class InventoryGeneratorController {
                     request.getColumns(),
                     request.getHoveredItemString(),
                     request.getContainerName(),
-                    request.isRenderBorder()
+                    request.getRenderBorder()
                 )
             );
         } catch (GeneratorException | IOException exception) {

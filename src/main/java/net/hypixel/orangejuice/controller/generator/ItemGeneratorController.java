@@ -29,8 +29,8 @@ public class ItemGeneratorController {
                 ItemService.generate(
                     request.getItemId(),
                     request.getData(),
-                    request.isEnchanted(),
-                    request.isHoverEffect(),
+                    request.getEnchanted(),
+                    request.getHoverEffect(),
                     request.getSkinValue()
                 )
             );

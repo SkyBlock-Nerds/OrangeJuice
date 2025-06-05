@@ -26,10 +26,10 @@ public class MultiDialogueGeneratorRequest {
     private MultiDialogueLine[] dialogue;
 
     @Schema(description = MAX_LINE_LENGTH_DESCRIPTION, example = MAX_LINE_LENGTH_EXAMPLE, requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-    private int maxLineLength;
+    private Integer maxLineLength;
 
     @Schema(description = ABIPHONE_DESCRIPTION, example = ABIPHONE_EXAMPLE, requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-    private boolean abiphone;
+    private Boolean abiphone;
 
     @Schema(description = SKIN_VALUE_DESCRIPTION, example = SKIN_VALUE_EXAMPLE, requiredMode = Schema.RequiredMode.NOT_REQUIRED)
     private String skinValue;

@@ -28,9 +28,9 @@ public class MultiDialogueGeneratorController {
             return HttpUtil.properApiImageReturn(
                 MultiDialogueService.generate(
                     request.getNpcNames(),
-                    request.getDialogue(), // TODO: Make this a list of lines instead of a string
+                    request.getDialogue(),
                     request.getMaxLineLength(),
-                    request.isAbiphone(),
+                    request.getAbiphone(),
                     request.getSkinValue()
                 )
             );

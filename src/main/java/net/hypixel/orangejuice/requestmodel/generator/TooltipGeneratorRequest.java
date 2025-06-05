@@ -41,29 +41,29 @@ public class TooltipGeneratorRequest {
     private InventoryItem[] recipe;
 
     @Schema(description = ALPHA_DESCRIPTION, example = ALPHA_EXAMPLE, requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-    private int alpha;
+    private Integer alpha;
 
     @Schema(description = PADDING_DESCRIPTION, example = PADDING_EXAMPLE, requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-    private int padding;
+    private Integer padding;
 
     @Schema(description = "Disable rarity line break", example = "false", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-    private boolean disableRarityLineBreak;
+    private Boolean disableRarityLineBreak;
 
     @Schema(description = "Is enchanted", example = "true", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-    private boolean enchanted;
+    private Boolean enchanted;
 
     @Schema(description = "Is centered", example = "false", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-    private boolean centered;
+    private Boolean centered;
 
     @Schema(description = "Padding for the first line", example = "true", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-    private boolean paddingFirstLine;
+    private Boolean paddingFirstLine;
 
     @Schema(description = MAX_LINE_LENGTH_DESCRIPTION, example = MAX_LINE_LENGTH_EXAMPLE, requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-    private int maxLineLength;
+    private Integer maxLineLength;
 
     @Schema(description = "Tooltip side", example = "left", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
     private String tooltipSide;
 
     @Schema(description = "Render border", example = "true", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-    private boolean renderBorder;
+    private Boolean renderBorder;
 }

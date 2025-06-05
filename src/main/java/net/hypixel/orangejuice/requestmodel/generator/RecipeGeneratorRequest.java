@@ -16,5 +16,5 @@ public class RecipeGeneratorRequest {
     private InventoryItem[] recipe;
 
     @Schema(description = "Whether to render the background", example = "true", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-    private boolean renderBackground;
+    private Boolean renderBackground;
 }

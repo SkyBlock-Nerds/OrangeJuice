@@ -21,10 +21,10 @@ public class ItemGeneratorRequest {
     private String skinValue;
 
     @Schema(description = "Adds the hover effect to the item", example = "false", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-    private boolean hoverEffect;
+    private Boolean hoverEffect;
 
     @Schema(description = "Adds the enchanted effect to the item", example = "false", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-    private boolean enchanted;
+    private Boolean enchanted;
 
     @Schema(description = "Extra miscellaneous data for the item", example = "", requiredMode = Schema.RequiredMode.NOT_REQUIRED) // TODO: example (not sure if its actually applicable here)
     private String data;

@@ -29,7 +29,7 @@ public class RecipeGeneratorController {
             return HttpUtil.properApiImageReturn(
                 RecipeService.generate(
                     InventoryItem.toStringFromArray(request.getRecipe()),
-                    request.isRenderBackground()
+                    request.getRenderBackground()
                 )
             );
         } catch (GeneratorException | IOException exception) {

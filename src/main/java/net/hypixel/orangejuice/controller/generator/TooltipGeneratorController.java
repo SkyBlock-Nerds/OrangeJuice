@@ -37,13 +37,13 @@ public class TooltipGeneratorController {
                     InventoryItem.toStringFromArray(request.getRecipe()),
                     request.getAlpha(),
                     request.getPadding(),
-                    request.isDisableRarityLineBreak(),
-                    request.isEnchanted(),
-                    request.isCentered(),
-                    request.isPaddingFirstLine(),
+                    request.getDisableRarityLineBreak(),
+                    request.getEnchanted(),
+                    request.getCentered(),
+                    request.getPaddingFirstLine(),
                     request.getMaxLineLength(),
                     request.getTooltipSide(),
-                    request.isRenderBorder()
+                    request.getRenderBorder()
                 )
             );
         } catch (GeneratorException | IOException exception) {

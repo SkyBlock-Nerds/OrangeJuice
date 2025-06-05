@@ -30,7 +30,7 @@ public class SingleDialogueGeneratorController {
                     request.getNpcName(),
                     request.getDialogue(),
                     request.getMaxLineLength(),
-                    request.isAbiphone(),
+                    request.getAbiphone(),
                     request.getSkinValue()
                 )
             );
