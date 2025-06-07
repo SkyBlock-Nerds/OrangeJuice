@@ -33,12 +33,6 @@ on:
       pathToConfigFile:
         description: 'Path to Config file:'
         type: string
-  push:
-    branches:
-      - 'main'
-    paths-ignore:
-      - '**.md'
-      - '.github/**'
 
 env:
   REGISTRY: ghcr.io
