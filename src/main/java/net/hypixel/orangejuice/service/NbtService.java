@@ -82,7 +82,6 @@ public class NbtService {
 
         GeneratedObject generatedObject = generatorImageBuilder.addGenerator(tooltipGenerator.build()).build();
 
-        TooltipGeneratorRequest tooltipGeneratorRequest = new TooltipGeneratorRequest();
         return new ParsedNbt(
             tooltipGenerator.buildTooltipGeneratorRequest(),
             generatedObject.isAnimated() ? generatedObject.getGifData() : ImageUtil.toByteArray(generatedObject.getImage())
