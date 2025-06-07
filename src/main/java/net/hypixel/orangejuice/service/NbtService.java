@@ -4,25 +4,28 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import lombok.Getter;
 import net.hypixel.orangejuice.generator.image.GeneratorImageBuilder;
 import net.hypixel.orangejuice.generator.image.MinecraftTooltip;
 import net.hypixel.orangejuice.generator.impl.MinecraftItemGenerator;
 import net.hypixel.orangejuice.generator.impl.MinecraftPlayerHeadGenerator;
 import net.hypixel.orangejuice.generator.impl.tooltip.MinecraftTooltipGenerator;
 import net.hypixel.orangejuice.generator.item.GeneratedObject;
+import net.hypixel.orangejuice.requestmodel.generator.TooltipGeneratorRequest;
+import net.hypixel.orangejuice.util.ImageUtil;
 import net.hypixel.orangejuice.util.Util;
 import net.hypixel.orangejuice.util.exception.NbtParseException;
-import net.hypixel.orangejuice.util.model.Pair;
 import org.jetbrains.annotations.Nullable;
+
+import java.io.IOException;
 
 public class NbtService {
 
-    // TODO find a better way to return the gen command because this is a bit messy (There shouldn't be a discord command in the general API)(aslo double return pair is wacky)
-    public static Pair<GeneratedObject, String> parseNbtString(
+    public static ParsedNbt parseNbtString(
         String nbt,
         @Nullable Integer alpha,
         @Nullable Integer padding
-    ) {
+    ) throws IOException {
         alpha = alpha == null ? MinecraftTooltip.DEFAULT_ALPHA : alpha;
         padding = padding == null ? MinecraftTooltip.DEFAULT_PADDING : padding;
 
@@ -78,10 +81,22 @@ public class NbtService {
             .withMaxLineLength(maxLineLength);
 
         GeneratedObject generatedObject = generatorImageBuilder.addGenerator(tooltipGenerator.build()).build();
-        String parsedCommand =
-            "Your NBT input has been parsed into a slash command:" + System.lineSeparator() +
-                "```" + System.lineSeparator() + tooltipGenerator.buildSlashCommand() + "```";
 
-        return new Pair<>(generatedObject, parsedCommand);
+        TooltipGeneratorRequest tooltipGeneratorRequest = new TooltipGeneratorRequest();
+        return new ParsedNbt(
+            tooltipGenerator.buildTooltipGeneratorRequest(),
+            generatedObject.isAnimated() ? generatedObject.getGifData() : ImageUtil.toByteArray(generatedObject.getImage())
+        );
+    }
+
+    @Getter
+    protected static class ParsedNbt {
+        private final TooltipGeneratorRequest TooltipGeneratorRequest;
+        private final byte[] image; // Can also be a GIF. Yes an GIF is an image, I don't care about your feelings
+
+        public ParsedNbt(TooltipGeneratorRequest tooltipGeneratorRequest, byte[] image) {
+            this.TooltipGeneratorRequest = tooltipGeneratorRequest;
+            this.image = image;
+        }
     }
 }

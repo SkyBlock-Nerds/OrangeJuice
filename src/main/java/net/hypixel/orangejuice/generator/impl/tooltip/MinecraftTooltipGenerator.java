@@ -13,9 +13,11 @@ import net.hypixel.orangejuice.generator.item.GeneratedObject;
 import net.hypixel.orangejuice.generator.text.ChatFormat;
 import net.hypixel.orangejuice.generator.text.segment.LineSegment;
 import net.hypixel.orangejuice.generator.text.wrapper.TextWrapper;
+import net.hypixel.orangejuice.requestmodel.generator.TooltipGeneratorRequest;
 import net.hypixel.orangejuice.util.ImageUtil;
 import net.hypixel.orangejuice.util.model.Range;
 import net.hypixel.orangejuice.util.Util;
+import org.apache.commons.lang3.NotImplementedException;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
@@ -27,7 +29,6 @@ import java.util.List;
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class MinecraftTooltipGenerator implements Generator {
 
-    public static final String DISCORD_BASE_COMMAND = "gen2"; //TODO change to "gen"
     public static final int DEFAULT_MAX_LINE_LENGTH = 36;
 
     private final String name;
@@ -228,43 +229,31 @@ public class MinecraftTooltipGenerator implements Generator {
         }
 
         /**
-         * Builds a slash command from the current state of the builder.
+         * Request model from the current state of the builder.
+         * Some values in the request model may be null if not set in the builder or not directly related to a tooltip.
          *
-         * @return A properly formatted slash command string.
+         * @return A {@link TooltipGeneratorRequest} populated with the current builder's data.
          */
-        public String buildSlashCommand() {
-            StringBuilder commandBuilder = new StringBuilder("/" + DISCORD_BASE_COMMAND + " item full ");
-            Field[] fields = this.getClass().getDeclaredFields();
+        public TooltipGeneratorRequest buildTooltipGeneratorRequest() {
+            TooltipGeneratorRequest request = new TooltipGeneratorRequest();
+            request.setItemName(name);
+            request.setItemLore(itemLore);
+            request.setType(type);
+            request.setRarity(rarity != null ? rarity.getName() : null);
+            request.setItemId(null);
+            request.setSkinValue(null);
+            request.setRecipe(null);
+            request.setAlpha(alpha);
+            request.setPadding(padding);
+            request.setDisableRarityLineBreak(disableRarityLineBreak);
+            request.setEnchanted(false);
+            request.setCentered(centered);
+            request.setPaddingFirstLine(paddingFirstLine);
+            request.setMaxLineLength(maxLineLength);
+            request.setTooltipSide(null);
+            request.setRenderBorder(renderBorder);
 
-            for (Field field : fields) {
-                try {
-                    field.setAccessible(true);
-
-                    int modifiers = field.getModifiers();
-                    if (Modifier.isTransient(modifiers)) {
-                        continue;
-                    }
-
-                    Object value = field.get(this);
-                    if (value != null && !(value instanceof String string && string.isEmpty())) {
-                        String paramName = Util.convertCamelCaseToSnakeCase(field.getName());
-
-                        commandBuilder.append(paramName).append(": ");
-
-                        if (value instanceof Boolean bool) {
-                            commandBuilder.append(bool ? "True" : "False"); // Discord slash commands use "True" and "False" for booleans
-                        } else {
-                            commandBuilder.append(value);
-                        }
-
-                        commandBuilder.append(" ");
-                    }
-                } catch (IllegalAccessException e) {
-                    throw new GeneratorException("Failed to build slash command", e);
-                }
-            }
-
-            return commandBuilder.toString().trim();
+            return request;
         }
 
         @Override
