@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: OrangeJuice
+
+server:
+  port: 8080
+  servlet:
+    context-path: /api
+
+springdoc:
+  swagger-ui:
+    path: /swagger
+    enabled: true
