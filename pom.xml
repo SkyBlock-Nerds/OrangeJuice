@@ -10,7 +10,7 @@
     </parent>
 
     <groupId>net.hypixel</groupId>
-    <artifactId>OrangeJuice</artifactId>
+    <artifactId>orange-juice</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
