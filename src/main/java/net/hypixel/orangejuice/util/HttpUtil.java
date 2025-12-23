@@ -10,6 +10,8 @@ import java.io.IOException;
 
 public class HttpUtil {
 
+    private HttpUtil() {}
+
     public static ResponseEntity properApiImageReturn(GeneratedObject generatedItem) throws IOException {
         if (generatedItem.isAnimated()) {
             byte[] gifBytes = generatedItem.getGifData();
