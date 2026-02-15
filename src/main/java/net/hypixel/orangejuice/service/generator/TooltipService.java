@@ -1,13 +1,13 @@
 package net.hypixel.orangejuice.service.generator;
 
-import net.hypixel.nerdbot.generator.data.Rarity;
-import net.hypixel.nerdbot.generator.image.GeneratorImageBuilder;
-import net.hypixel.nerdbot.generator.image.MinecraftTooltip;
-import net.hypixel.nerdbot.generator.impl.MinecraftInventoryGenerator;
-import net.hypixel.nerdbot.generator.impl.MinecraftItemGenerator;
-import net.hypixel.nerdbot.generator.impl.MinecraftPlayerHeadGenerator;
-import net.hypixel.nerdbot.generator.impl.tooltip.MinecraftTooltipGenerator;
-import net.hypixel.nerdbot.generator.item.GeneratedObject;
+import net.aerh.imagegenerator.data.Rarity;
+import net.aerh.imagegenerator.image.GeneratorImageBuilder;
+import net.aerh.imagegenerator.image.MinecraftTooltip;
+import net.aerh.imagegenerator.impl.MinecraftInventoryGenerator;
+import net.aerh.imagegenerator.impl.MinecraftItemGenerator;
+import net.aerh.imagegenerator.impl.MinecraftPlayerHeadGenerator;
+import net.aerh.imagegenerator.impl.tooltip.MinecraftTooltipGenerator;
+import net.aerh.imagegenerator.item.GeneratedObject;
 import net.hypixel.orangejuice.util.StringUtil;
 import org.jetbrains.annotations.Nullable;
 

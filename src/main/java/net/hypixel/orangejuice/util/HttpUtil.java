@@ -1,6 +1,6 @@
 package net.hypixel.orangejuice.util;
 
-import net.hypixel.nerdbot.generator.item.GeneratedObject;
+import net.aerh.imagegenerator.item.GeneratedObject;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;

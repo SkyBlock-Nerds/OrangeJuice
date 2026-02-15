@@ -15,11 +15,18 @@
     <packaging>jar</packaging>
 
     <name>OrangeJuice</name>
-    <description>An HTTP API for interacting with the NerdBot Generator</description>
+    <description>A HTTP API for interacting with MinecraftImageGenerator</description>
 
     <properties>
         <java.version>21</java.version>
     </properties>
+
+    <repositories>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
+    </repositories>
 
     <dependencies>
         <dependency>
@@ -71,9 +78,9 @@
         </dependency>
 
         <dependency>
-            <groupId>net.hypixel</groupId>
-            <artifactId>nerdbot-generator</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <groupId>com.github.Aerhhh</groupId>
+            <artifactId>MinecraftImageGenerator</artifactId>
+            <version>master-SNAPSHOT</version>
         </dependency>
     </dependencies>
 

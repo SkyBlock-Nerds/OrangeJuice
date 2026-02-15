@@ -1,11 +1,11 @@
 package net.hypixel.orangejuice.service.generator;
 
-import net.hypixel.nerdbot.generator.exception.GeneratorException;
-import net.hypixel.nerdbot.generator.image.GeneratorImageBuilder;
-import net.hypixel.nerdbot.generator.image.MinecraftTooltip;
-import net.hypixel.nerdbot.generator.impl.MinecraftPlayerHeadGenerator;
-import net.hypixel.nerdbot.generator.impl.tooltip.MinecraftTooltipGenerator;
-import net.hypixel.nerdbot.generator.item.GeneratedObject;
+import net.aerh.imagegenerator.exception.GeneratorException;
+import net.aerh.imagegenerator.image.GeneratorImageBuilder;
+import net.aerh.imagegenerator.image.MinecraftTooltip;
+import net.aerh.imagegenerator.impl.MinecraftPlayerHeadGenerator;
+import net.aerh.imagegenerator.impl.tooltip.MinecraftTooltipGenerator;
+import net.aerh.imagegenerator.item.GeneratedObject;
 import net.hypixel.orangejuice.requestmodel.generator.submodels.MultiDialogueLine;
 import org.jetbrains.annotations.Nullable;
 
