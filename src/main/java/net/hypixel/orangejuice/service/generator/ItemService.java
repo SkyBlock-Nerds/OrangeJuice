@@ -1,9 +1,9 @@
 package net.hypixel.orangejuice.service.generator;
 
-import net.hypixel.nerdbot.generator.image.GeneratorImageBuilder;
-import net.hypixel.nerdbot.generator.impl.MinecraftItemGenerator;
-import net.hypixel.nerdbot.generator.impl.MinecraftPlayerHeadGenerator;
-import net.hypixel.nerdbot.generator.item.GeneratedObject;
+import net.aerh.imagegenerator.image.GeneratorImageBuilder;
+import net.aerh.imagegenerator.impl.MinecraftItemGenerator;
+import net.aerh.imagegenerator.impl.MinecraftPlayerHeadGenerator;
+import net.aerh.imagegenerator.item.GeneratedObject;
 import org.jetbrains.annotations.Nullable;
 
 public class ItemService {

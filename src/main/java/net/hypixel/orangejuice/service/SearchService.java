@@ -1,11 +1,11 @@
 package net.hypixel.orangejuice.service;
 
-import net.hypixel.nerdbot.generator.data.Gemstone;
-import net.hypixel.nerdbot.generator.data.Icon;
-import net.hypixel.nerdbot.generator.data.Rarity;
-import net.hypixel.nerdbot.generator.data.Stat;
-import net.hypixel.nerdbot.generator.impl.tooltip.MinecraftTooltipGenerator;
-import net.hypixel.nerdbot.generator.spritesheet.Spritesheet;
+import net.aerh.imagegenerator.data.Gemstone;
+import net.aerh.imagegenerator.data.Icon;
+import net.aerh.imagegenerator.data.Rarity;
+import net.aerh.imagegenerator.data.Stat;
+import net.aerh.imagegenerator.impl.tooltip.MinecraftTooltipGenerator;
+import net.aerh.imagegenerator.spritesheet.Spritesheet;
 import net.hypixel.orangejuice.util.StringUtil;
 import org.jetbrains.annotations.Nullable;
 
