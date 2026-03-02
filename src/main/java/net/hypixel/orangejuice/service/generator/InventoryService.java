@@ -35,8 +35,9 @@ public class InventoryService {
                 .withItemLore(hoveredItemString)
                 .withAlpha(MinecraftTooltip.DEFAULT_ALPHA)
                 .withPadding(MinecraftTooltip.DEFAULT_PADDING)
-                .isPaddingFirstLine(false)
-                .disableRarityLineBreak(false)
+                .hasFirstLinePadding(false)
+                // TODO find correct way for below
+                //.disableRarityLineBreak(false)
                 .withRenderBorder(true)
                 .build();
 

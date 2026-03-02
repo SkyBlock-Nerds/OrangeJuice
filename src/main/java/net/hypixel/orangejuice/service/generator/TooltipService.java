@@ -50,10 +50,11 @@ public class TooltipService {
             .withType(type)
             .withAlpha(alpha)
             .withPadding(padding)
-            .disableRarityLineBreak(disableRarityLineBreak)
+            // TODO find correct way for below
+            //.disableRarityLineBreak(disableRarityLineBreak)
             .withMaxLineLength(maxLineLength)
             .isTextCentered(centered)
-            .isPaddingFirstLine(paddingFirstLine)
+            .hasFirstLinePadding(paddingFirstLine)
             .withRenderBorder(renderBorder)
             .build();
 

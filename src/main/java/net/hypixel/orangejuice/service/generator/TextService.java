@@ -29,8 +29,9 @@ public class TextService {
             .withPadding(padding)
             .withMaxLineLength(maxLineLength)
             .isTextCentered(centered)
-            .isPaddingFirstLine(false)
-            .disableRarityLineBreak(false)
+            .hasFirstLinePadding(false)
+            // TODO find correct way for below
+            //.disableRarityLineBreak(false)
             .withRenderBorder(renderBorder)
             .build();
 

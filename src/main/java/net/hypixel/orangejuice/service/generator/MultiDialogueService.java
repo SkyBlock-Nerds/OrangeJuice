@@ -46,8 +46,9 @@ public class MultiDialogueService {
             .withItemLore(String.join("\n", lines))
             .withAlpha(0)
             .withPadding(MinecraftTooltip.DEFAULT_PADDING)
-            .isPaddingFirstLine(false)
-            .disableRarityLineBreak(false)
+            .hasFirstLinePadding(false)
+            // TODO find correct way for below
+            //.disableRarityLineBreak(false)
             .withMaxLineLength(maxLineLength)
             .bypassMaxLineLength(true);
 
