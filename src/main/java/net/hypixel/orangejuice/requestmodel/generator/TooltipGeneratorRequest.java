@@ -36,9 +36,6 @@ public class TooltipGeneratorRequest {
     @Schema(description = PADDING_DESCRIPTION, example = PADDING_EXAMPLE, requiredMode = Schema.RequiredMode.NOT_REQUIRED)
     private Integer padding;
 
-    @Schema(description = "Disable rarity line break", example = "false", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-    private Boolean disableRarityLineBreak;
-
     @Schema(description = "Is enchanted", example = "true", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
     private Boolean enchanted;
 

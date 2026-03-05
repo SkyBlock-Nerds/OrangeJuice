@@ -34,7 +34,6 @@ public class TooltipGeneratorController {
                     InventoryItem.toStringFromArray(request.getRecipe()),
                     request.getAlpha(),
                     request.getPadding(),
-                    request.getDisableRarityLineBreak(),
                     request.getEnchanted(),
                     request.getCentered(),
                     request.getPaddingFirstLine(),

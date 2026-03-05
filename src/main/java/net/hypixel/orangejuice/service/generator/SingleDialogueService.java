@@ -39,8 +39,6 @@ public class SingleDialogueService {
             .withAlpha(0)
             .withPadding(MinecraftTooltip.DEFAULT_PADDING)
             .hasFirstLinePadding(false)
-            // TODO find correct way for below
-            //.disableRarityLineBreak(false)
             .withMaxLineLength(maxLineLength)
             .bypassMaxLineLength(true);
 

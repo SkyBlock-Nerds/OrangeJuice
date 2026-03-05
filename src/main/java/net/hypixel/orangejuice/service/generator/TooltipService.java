@@ -23,7 +23,6 @@ public class TooltipService {
         @Nullable String recipe,
         @Nullable Integer alpha,
         @Nullable Integer padding,
-        @Nullable Boolean disableRarityLineBreak,
         @Nullable Boolean enchanted,
         @Nullable Boolean centered,
         @Nullable Boolean paddingFirstLine,
@@ -35,7 +34,6 @@ public class TooltipService {
         rarity = rarity == null ? "none" : rarity;
         alpha = alpha == null ? MinecraftTooltip.DEFAULT_ALPHA : alpha;
         padding = padding == null ? MinecraftTooltip.DEFAULT_PADDING : padding;
-        disableRarityLineBreak = disableRarityLineBreak == null || disableRarityLineBreak;
         centered = centered != null && centered;
         enchanted = enchanted != null && enchanted;
         paddingFirstLine = paddingFirstLine == null || paddingFirstLine;
@@ -50,8 +48,6 @@ public class TooltipService {
             .withType(type)
             .withAlpha(alpha)
             .withPadding(padding)
-            // TODO find correct way for below
-            //.disableRarityLineBreak(disableRarityLineBreak)
             .withMaxLineLength(maxLineLength)
             .isTextCentered(centered)
             .hasFirstLinePadding(paddingFirstLine)
