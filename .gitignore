@@ -21,3 +21,6 @@ target/
 
 # Package Files
 *.jar
+
+# Dev Configs
+src/main/resources/application-dev.yml

@@ -1,6 +1,8 @@
 spring:
   application:
     name: OrangeJuice
+  profiles:
+    active: dev
 
 server:
   port: 8080
