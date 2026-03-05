@@ -27,7 +27,7 @@ on:
         description: 'Environment type (for image/container name):'
         type: string
       githubEnvironment:
-        description: "The environment the .env file will be pulled from:"
+        description: "The environment the secrets and vars will be pulled from:"
         type: environment
         required: true
   push:
