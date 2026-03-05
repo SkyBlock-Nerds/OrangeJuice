@@ -1,0 +1,108 @@
+# Usage:
+# - If the build is successful, it packages the application into a Docker container.
+# - The container is pushed to GHCR, pulled and deployed on the vps.
+
+# Requirements:
+# - These secrets must be set up in the repository settings:
+#   - SSH_PRIVATE_KEY: Private SSH key for accessing the vps
+# - These variables must be set up in the repository settings:
+#   - SSH_USER: The SSH username for the vps
+#   - SSH_HOST: The SSH host (IP or domain) of the vps
+
+name: Publish to VPS
+
+on:
+  workflow_dispatch:
+    inputs:
+      outerPort:
+        description: 'Outer port:'
+        required: true
+        type: number
+      useOldImage:
+        description: 'Use old Docker image'
+        required: true
+        default: false
+        type: boolean
+      environmentType:
+        description: 'Environment type (for image/container name):'
+        type: string
+      githubEnvironment:
+        description: "The environment the .env file will be pulled from:"
+        type: environment
+        required: true
+  push:
+    branches:
+      - 'main'
+    paths-ignore:
+      - '**.md'
+      - '.github/**'
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository_owner }}/orange-juice-${{ github.event.inputs.environmentType || 'PRODUCTION' }}-${{ github.ref_name }}
+  CONTAINER_NAME: cruiser-fe-${{ github.event.inputs.environmentType || 'PRODUCTION' }}-${{ github.ref_name }}
+  OUTER_PORT: ${{ github.event.inputs.outerPort || '8080' }}
+  USE_OLD_IMAGE: ${{ github.event.inputs.useOldImage || 'false' }}
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  publish:
+    name: Publish image
+    runs-on: ubuntu-latest
+    environment: ${{ github.event.inputs.githubEnvironment || 'MainBranch'}}
+
+    steps:
+      - name: Checkout code
+        if: ${{ env.USE_OLD_IMAGE == 'false' }}
+        uses: actions/checkout@v4.2.2
+
+      - name: Login to GHCR
+        if: ${{ env.USE_OLD_IMAGE == 'false' }}
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ${{ env.REGISTRY }} -u ${{ github.actor }} --password-stdin
+
+      - name: Create .env file
+        if: ${{ env.USE_OLD_IMAGE == 'false' }}
+        run: |
+          echo "${{ vars.ENV_FILE }}" > .env
+          echo "Contents of .env:"
+          cat .env
+
+      - name: Build and push Docker image
+        if: ${{ env.USE_OLD_IMAGE == 'false' }}
+        run: |
+          docker build . --tag ${{ env.REGISTRY }}/$(echo "${{ env.IMAGE_NAME }}:latest" | tr '[:upper:]' '[:lower:]')
+          docker push ${{ env.REGISTRY }}/$(echo "${{ env.IMAGE_NAME }}:latest" | tr '[:upper:]' '[:lower:]')
+
+  deploy:
+    needs: publish
+    name: Deploy image
+    runs-on: ubuntu-latest
+    environment: SSHKey
+
+    steps:
+      - name: Install SSH keys
+        run: |
+          install -m 600 -D /dev/null ~/.ssh/id_rsa
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          ssh-keyscan -H ${{ vars.SSH_HOST }} > ~/.ssh/known_hosts
+
+      - name: Deploy
+        run: |
+          ssh ${{ vars.SSH_USER }}@${{ vars.SSH_HOST }} << 'EOF'
+          echo "${{ secrets.GITHUB_TOKEN }}" | sudo docker login ${{ env.REGISTRY }} -u ${{ github.actor }} --password-stdin
+          sudo docker pull ${{ env.REGISTRY }}/$(echo "${{ env.IMAGE_NAME }}:latest" | tr '[:upper:]' '[:lower:]')
+          sudo docker stop $(echo "${{ env.CONTAINER_NAME }}" | tr '[:upper:]' '[:lower:]' | tr '/' '-') || true
+          sudo docker rm $(echo "${{ env.CONTAINER_NAME }}" | tr '[:upper:]' '[:lower:]' | tr '/' '-') || true
+          sudo docker rmi $(sudo docker images $(echo "${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}" | tr '[:upper:]' '[:lower:]') -q) -f || true
+          sudo docker run -d \
+            --name $(echo "${{ env.CONTAINER_NAME }}" | tr '[:upper:]' '[:lower:]' | tr '/' '-') \
+            --restart unless-stopped \
+            -p ${{ env.OUTER_PORT }}:8080 \
+            ${{ env.REGISTRY }}/$(echo "${{ env.IMAGE_NAME }}:latest" | tr '[:upper:]' '[:lower:]')
+          EOF
+
+      - name: Cleanup SSH keys
+        run: rm -rf ~/.ssh
