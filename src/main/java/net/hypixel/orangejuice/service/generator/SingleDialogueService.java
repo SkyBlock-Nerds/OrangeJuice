@@ -37,6 +37,7 @@ public class SingleDialogueService {
         MinecraftTooltipGenerator.Builder tooltipGenerator = new MinecraftTooltipGenerator.Builder()
             .withItemLore(String.join("\n", dialogue))
             .withAlpha(0)
+            .withRenderBorder(false)
             .withPadding(MinecraftTooltip.DEFAULT_PADDING)
             .hasFirstLinePadding(false)
             .withMaxLineLength(maxLineLength)

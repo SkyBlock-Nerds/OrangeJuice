@@ -45,6 +45,7 @@ public class MultiDialogueService {
         MinecraftTooltipGenerator.Builder tooltipGenerator = new MinecraftTooltipGenerator.Builder()
             .withItemLore(String.join("\n", lines))
             .withAlpha(0)
+            .withRenderBorder(false)
             .withPadding(MinecraftTooltip.DEFAULT_PADDING)
             .hasFirstLinePadding(false)
             .withMaxLineLength(maxLineLength)
