@@ -40,7 +40,7 @@ on:
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository_owner }}/orange-juice-${{ github.event.inputs.environmentType || 'PRODUCTION' }}-${{ github.ref_name }}
-  CONTAINER_NAME: cruiser-fe-${{ github.event.inputs.environmentType || 'PRODUCTION' }}-${{ github.ref_name }}
+  CONTAINER_NAME: orange-juice-${{ github.event.inputs.environmentType || 'PRODUCTION' }}-${{ github.ref_name }}
   OUTER_PORT: ${{ github.event.inputs.outerPort || '8080' }}
   USE_OLD_IMAGE: ${{ github.event.inputs.useOldImage || 'false' }}
 
