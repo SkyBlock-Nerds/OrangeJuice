@@ -31,7 +31,7 @@ public class TooltipService {
         @Nullable Boolean renderBorder
     ) {
         type = type == null ? "" : type;
-        rarity = rarity == null ? "none" : rarity;
+        rarity = StringUtil.isNullOrBlank(rarity) ? "none" : rarity;
         alpha = alpha == null ? MinecraftTooltip.DEFAULT_ALPHA : alpha;
         padding = padding == null ? MinecraftTooltip.DEFAULT_PADDING : padding;
         centered = centered != null && centered;
