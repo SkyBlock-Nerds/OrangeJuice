@@ -16,7 +16,7 @@ public class TooltipGeneratorRequest {
     private String itemLore;
 
     @Schema(description = "Item type", example = "SWORD", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-    private String type;
+    private String itemType;
 
     @Schema(description = "Item rarity", example = "legendary", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
     private String rarity;

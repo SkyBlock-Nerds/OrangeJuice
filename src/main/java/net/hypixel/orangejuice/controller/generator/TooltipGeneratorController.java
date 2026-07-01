@@ -27,7 +27,7 @@ public class TooltipGeneratorController {
                 TooltipService.generate(
                     request.getItemName(),
                     request.getItemLore(),
-                    request.getType(),
+                    request.getItemType(),
                     request.getRarity(),
                     request.getItemId(),
                     request.getSkinValue(),
