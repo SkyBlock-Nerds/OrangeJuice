@@ -1,9 +1,6 @@
 package net.hypixel.orangejuice.service;
 
-import net.aerh.imagegenerator.data.Gemstone;
-import net.aerh.imagegenerator.data.Icon;
-import net.aerh.imagegenerator.data.Rarity;
-import net.aerh.imagegenerator.data.Stat;
+import net.aerh.imagegenerator.data.*;
 import net.aerh.imagegenerator.impl.tooltip.MinecraftTooltipGenerator;
 import net.aerh.imagegenerator.spritesheet.Spritesheet;
 import net.hypixel.orangejuice.util.StringUtil;
@@ -54,5 +51,12 @@ public class SearchService {
             .map(MinecraftTooltipGenerator.TooltipSide::name)
             .filter(s -> StringUtil.isNullOrBlank(searchTerm) || s.toLowerCase().contains(searchTerm.toLowerCase()))
             .toList();
+    }
+
+    public static List<Flavor> Flavor(@Nullable String searchTerm){
+        return Flavor.getFlavors()
+                .stream()
+                .filter(i -> StringUtil.isNullOrBlank(searchTerm) || i.getName().toLowerCase().contains(searchTerm.toLowerCase()))
+                .toList();
     }
 }

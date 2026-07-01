@@ -90,7 +90,20 @@ public class SearchController {
         try {
             return ResponseEntity.ok(SearchService.gemstones(searchTerm));
         } catch (Exception exception) {
-            log.error("Encountered an error while getting tooltip sides", exception);
+            log.error("Encountered an error while getting gemstones", exception);
+            return ResponseEntity.status(500).body("An error occurred while processing the request" + exception.getCause());
+        }
+    }
+
+    @Operation(summary = "Get flavor text by search term")
+    @GetMapping("/flavor")
+    public ResponseEntity flavor(
+            @RequestParam(required = false) @Nullable String searchTerm
+    ) {
+        try {
+            return ResponseEntity.ok(SearchService.Flavor(searchTerm));
+        } catch (Exception exception) {
+            log.error("Encountered an error while getting flavor text", exception);
             return ResponseEntity.status(500).body("An error occurred while processing the request" + exception.getCause());
         }
     }
