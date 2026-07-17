@@ -80,7 +80,7 @@
         <dependency>
             <groupId>com.github.Aerhhh.jigsaw</groupId>
             <artifactId>MinecraftImageGenerator</artifactId>
-            <version>6674562b68</version>
+            <version>e6e7bfc508</version>
         </dependency>
     </dependencies>
 
