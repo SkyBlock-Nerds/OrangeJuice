@@ -53,4 +53,10 @@ public class TooltipGeneratorRequest {
 
     @Schema(description = "Render border", example = "true", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
     private Boolean renderBorder;
+
+    @Schema(description = TEXTURE_PACK_DESCRIPTION, example = TEXTURE_PACK_EXAMPLE, requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+    private String texturePack;
+
+    @Schema(description = TOOLTIP_STYLE_DESCRIPTION, example = TOOLTIP_STYLE_EXAMPLE, requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+    private String tooltipStyle;
 }

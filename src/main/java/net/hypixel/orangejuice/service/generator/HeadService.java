@@ -4,7 +4,7 @@ import net.aerh.imagegenerator.image.GeneratorImageBuilder;
 import net.aerh.imagegenerator.impl.MinecraftPlayerHeadGenerator;
 import net.aerh.imagegenerator.item.GeneratedObject;
 
-public class HeadService {
+public class HeadService extends GeneratorService {
 
     public static GeneratedObject generate(String skinValue) {
         return new GeneratorImageBuilder()

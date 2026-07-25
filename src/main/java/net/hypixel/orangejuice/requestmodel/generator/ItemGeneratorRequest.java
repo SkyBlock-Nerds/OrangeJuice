@@ -25,4 +25,7 @@ public class ItemGeneratorRequest {
 
     @Schema(description = "Extra miscellaneous data for the item", example = "", requiredMode = Schema.RequiredMode.NOT_REQUIRED) // TODO: example (not sure if its actually applicable here)
     private String data;
+
+    @Schema(description = TEXTURE_PACK_DESCRIPTION, example = TEXTURE_PACK_EXAMPLE, requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+    private String texturePack;
 }

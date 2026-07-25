@@ -2,6 +2,8 @@ package net.hypixel.orangejuice.service;
 
 import net.aerh.imagegenerator.data.*;
 import net.aerh.imagegenerator.impl.tooltip.MinecraftTooltipGenerator;
+import net.aerh.imagegenerator.pack.PackId;
+import net.aerh.imagegenerator.pack.PackRepository;
 import net.aerh.imagegenerator.spritesheet.Spritesheet;
 import net.hypixel.orangejuice.util.StringUtil;
 import org.jetbrains.annotations.Nullable;
@@ -10,7 +12,15 @@ import java.util.Arrays;
 import java.util.List;
 
 public class SearchService {
+    // TODO run is null or blank check for searchterms not in the filter loops because bad of performance ofc aka copy tooltipStyle in code flow
+
     public static List<String> itemNames(@Nullable String searchTerm) {
+//        var pr = PackRepository.global();
+//        var packIds = pr.registeredPacks();
+//        for (PackId packId : packIds) {
+//            // TODO add logic for adding pack items to the returned list and fetching id's
+//        }
+
         return Spritesheet.getImageMap()
             .keySet()
             .stream()
@@ -53,10 +63,35 @@ public class SearchService {
             .toList();
     }
 
-    public static List<Flavor> Flavor(@Nullable String searchTerm){
+    public static List<Flavor> Flavor(@Nullable String searchTerm) {
         return Flavor.getFlavors()
-                .stream()
-                .filter(i -> StringUtil.isNullOrBlank(searchTerm) || i.getName().toLowerCase().contains(searchTerm.toLowerCase()))
-                .toList();
+            .stream()
+            .filter(i -> StringUtil.isNullOrBlank(searchTerm) || i.getName().toLowerCase().contains(searchTerm.toLowerCase()))
+            .toList();
+    }
+
+    public static List<PackId> texturePacks(@Nullable String searchTerm) {
+        return PackRepository.global().registeredPacks()
+            .stream()
+            .filter(p -> StringUtil.isNullOrBlank(searchTerm) || p.name().toLowerCase().contains(searchTerm.toLowerCase()) || p.namespace().toLowerCase().contains(searchTerm.toLowerCase()))
+            .toList();
+    }
+
+    public static List<String> tooltipStyle(@Nullable String packId, @Nullable String searchTerm) {
+        if (StringUtil.isNullOrBlank(packId))
+            return List.of();
+
+        packId = packId.toLowerCase();
+        if (packId.equals("minecraft:minecraft") || packId.equals("vanilla"))
+            return List.of();
+
+        if (searchTerm == null)
+            return PackRepository.global().tooltipStyles(PackId.parse(packId));
+
+        String finalSearchTerm = searchTerm.toLowerCase();
+        return PackRepository.global().tooltipStyles(PackId.parse(packId))
+            .stream()
+            .filter(ts -> ts.contains(finalSearchTerm))
+            .toList();
     }
 }

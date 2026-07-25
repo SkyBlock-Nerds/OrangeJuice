@@ -98,12 +98,40 @@ public class SearchController {
     @Operation(summary = "Get flavor text by search term")
     @GetMapping("/flavor")
     public ResponseEntity flavor(
-            @RequestParam(required = false) @Nullable String searchTerm
+        @RequestParam(required = false) @Nullable String searchTerm
     ) {
         try {
             return ResponseEntity.ok(SearchService.Flavor(searchTerm));
         } catch (Exception exception) {
             log.error("Encountered an error while getting flavor text", exception);
+            return ResponseEntity.status(500).body("An error occurred while processing the request" + exception.getCause());
+        }
+    }
+
+    @Operation(summary = "Get all loaded texture packs")
+    @GetMapping("/texture-packs")
+    public ResponseEntity texturePacks(
+        @RequestParam(required = false) @Nullable String searchTerm
+    ) {
+        try {
+            return ResponseEntity.ok(SearchService.texturePacks(searchTerm));
+        } catch (Exception exception) {
+            log.error("Encountered an error while getting texture packs", exception);
+            return ResponseEntity.status(500).body("An error occurred while processing the request" + exception.getCause());
+        }
+    }
+
+    @Operation(summary = "Get all tooltip styles, effectively only works with a packId")
+    @GetMapping("/tooltip-styles")
+    public ResponseEntity tooltipStyles(
+        @RequestParam(required = false ) @Nullable String packId,
+        @RequestParam(required = false) @Nullable String searchTerm
+    )
+    {
+        try {
+            return ResponseEntity.ok(SearchService.tooltipStyle(packId, searchTerm));
+        } catch (Exception exception) {
+            log.error("Encountered an error while getting tooltip styles", exception);
             return ResponseEntity.status(500).body("An error occurred while processing the request" + exception.getCause());
         }
     }
