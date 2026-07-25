@@ -7,7 +7,7 @@ import lombok.EqualsAndHashCode;
 import static net.hypixel.orangejuice.requestmodel.ApiDocsConstants.*;
 
 @EqualsAndHashCode(callSuper = false)
-@Schema(description = "Request to generate multi npc dialogue")
+@Schema(description = "Request to generate single npc dialogue")
 @Data
 public class SingleDialogueGeneratorRequest {
 
@@ -25,4 +25,7 @@ public class SingleDialogueGeneratorRequest {
 
     @Schema(description = SKIN_VALUE_DESCRIPTION, example = SKIN_VALUE_EXAMPLE, requiredMode = Schema.RequiredMode.NOT_REQUIRED)
     private String skinValue;
+
+    @Schema(description = TEXTURE_PACK_DESCRIPTION, example = TEXTURE_PACK_EXAMPLE, requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+    private String texturePack;
 }

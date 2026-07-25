@@ -5,8 +5,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import net.hypixel.orangejuice.requestmodel.generator.submodels.InventoryItem;
 
-import static net.hypixel.orangejuice.requestmodel.ApiDocsConstants.RENDER_BORDER_DESCRIPTION;
-import static net.hypixel.orangejuice.requestmodel.ApiDocsConstants.RENDER_BORDER_EXAMPLE;
+import static net.hypixel.orangejuice.requestmodel.ApiDocsConstants.*;
 
 @EqualsAndHashCode(callSuper = false)
 @Schema(description = "Request to generate an inventory")
@@ -30,4 +29,10 @@ public class InventoryGeneratorRequest {
 
     @Schema(description = RENDER_BORDER_DESCRIPTION, example = RENDER_BORDER_EXAMPLE, requiredMode = Schema.RequiredMode.NOT_REQUIRED)
     private Boolean renderBorder;
+
+    @Schema(description = TEXTURE_PACK_DESCRIPTION, example = TEXTURE_PACK_EXAMPLE, requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+    private String texturePack;
+
+    @Schema(description = TOOLTIP_STYLE_DESCRIPTION, example = TOOLTIP_STYLE_EXAMPLE, requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+    private String tooltipStyle;
 }

@@ -25,13 +25,14 @@ public class MultiDialogueGeneratorController {
     public ResponseEntity generate(@RequestBody SingleDialogueGeneratorRequest request) {
         try {
             return HttpUtil.properApiImageReturn(
-                    SingleDialogueService.generate(
-                            request.getNpcName(),
-                            request.getDialogue(),
-                            request.getMaxLineLength(),
-                            request.getAbiphone(),
-                            request.getSkinValue()
-                    )
+                SingleDialogueService.generate(
+                    request.getNpcName(),
+                    request.getDialogue(),
+                    request.getMaxLineLength(),
+                    request.getAbiphone(),
+                    request.getSkinValue(),
+                    request.getTexturePack()
+                )
             );
         } catch (Exception exception) {
             log.error("Encountered an error while generating the image", exception);
@@ -49,7 +50,8 @@ public class MultiDialogueGeneratorController {
                     request.getDialogue(),
                     request.getMaxLineLength(),
                     request.getAbiphone(),
-                    request.getSkinValue()
+                    request.getSkinValue(),
+                    request.getTexturePack()
                 )
             );
         } catch (Exception exception) {

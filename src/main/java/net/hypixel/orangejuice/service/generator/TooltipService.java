@@ -8,10 +8,11 @@ import net.aerh.imagegenerator.impl.MinecraftItemGenerator;
 import net.aerh.imagegenerator.impl.MinecraftPlayerHeadGenerator;
 import net.aerh.imagegenerator.impl.tooltip.MinecraftTooltipGenerator;
 import net.aerh.imagegenerator.item.GeneratedObject;
+import net.aerh.imagegenerator.pack.PackId;
 import net.hypixel.orangejuice.util.StringUtil;
 import org.jetbrains.annotations.Nullable;
 
-public class TooltipService {
+public class TooltipService extends GeneratorService {
 
     public static GeneratedObject generate(
         String itemName,
@@ -28,7 +29,9 @@ public class TooltipService {
         @Nullable Boolean paddingFirstLine,
         @Nullable Integer maxLineLength,
         @Nullable String tooltipSide,
-        @Nullable Boolean renderBorder
+        @Nullable Boolean renderBorder,
+        @Nullable String texturePack,
+        @Nullable String tooltipStyle
     ) {
         type = type == null ? "" : type;
         rarity = StringUtil.isNullOrBlank(rarity) ? "none" : rarity;
@@ -41,7 +44,8 @@ public class TooltipService {
         renderBorder = renderBorder == null || renderBorder;
 
         GeneratorImageBuilder generatorImageBuilder = new GeneratorImageBuilder();
-        MinecraftTooltipGenerator tooltipGenerator = new MinecraftTooltipGenerator.Builder()
+        PackId packId = StringUtil.isNullOrBlank(texturePack) ? null : PackId.parse(texturePack);
+        MinecraftTooltipGenerator.Builder tooltipGenerator = new MinecraftTooltipGenerator.Builder()
             .withName(itemName)
             .withRarity(Rarity.byName(rarity))
             .withItemLore(itemLore)
@@ -52,7 +56,12 @@ public class TooltipService {
             .isTextCentered(centered)
             .hasFirstLinePadding(paddingFirstLine)
             .withRenderBorder(renderBorder)
-            .build();
+            .withTooltipStyle(tooltipStyle)
+            .withPack(packId);
+
+        if (ShouldApplyHypixelSkyblockTextColor(packId)) {
+            tooltipGenerator = tooltipGenerator.withTextColorRemap(InventoryService.SKYBLOCK_TEXT_COLOR_REMAP);
+        }
 
         if (!StringUtil.isNullOrBlank(itemId)) {
             if (itemId.equalsIgnoreCase("player_head")) {
@@ -84,9 +93,9 @@ public class TooltipService {
         }
 
         if (tooltipSide != null && MinecraftTooltipGenerator.TooltipSide.valueOf(tooltipSide.toUpperCase()) == MinecraftTooltipGenerator.TooltipSide.LEFT) {
-            generatorImageBuilder.addGenerator(0, tooltipGenerator);
+            generatorImageBuilder.addGenerator(0, tooltipGenerator.build());
         } else {
-            generatorImageBuilder.addGenerator(tooltipGenerator);
+            generatorImageBuilder.addGenerator(tooltipGenerator.build());
         }
 
         return generatorImageBuilder.build();

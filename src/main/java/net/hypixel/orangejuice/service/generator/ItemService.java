@@ -4,16 +4,19 @@ import net.aerh.imagegenerator.image.GeneratorImageBuilder;
 import net.aerh.imagegenerator.impl.MinecraftItemGenerator;
 import net.aerh.imagegenerator.impl.MinecraftPlayerHeadGenerator;
 import net.aerh.imagegenerator.item.GeneratedObject;
+import net.aerh.imagegenerator.pack.PackId;
+import net.hypixel.orangejuice.util.StringUtil;
 import org.jetbrains.annotations.Nullable;
 
-public class ItemService {
+public class ItemService extends GeneratorService {
 
     public static GeneratedObject generate(
         String itemId,
         @Nullable String data,
         @Nullable Boolean enchanted,
         @Nullable Boolean hoverEffect,
-        @Nullable String skinValue
+        @Nullable String skinValue,
+        @Nullable String texturePack
     ) {
         enchanted = enchanted != null && enchanted;
         hoverEffect = hoverEffect != null && hoverEffect;
@@ -25,14 +28,16 @@ public class ItemService {
                 .withSkin(skinValue)
                 .build());
         } else {
-            item.addGenerator(new MinecraftItemGenerator.Builder()
+            PackId packId = StringUtil.isNullOrBlank(texturePack) ? null : PackId.parse(texturePack);
+            MinecraftItemGenerator.Builder itemGenerator = new MinecraftItemGenerator.Builder()
                 .withItem(itemId)
                 .withData(data)
                 .isEnchanted(enchanted)
                 .withHoverEffect(hoverEffect)
                 .isBigImage()
-                .build()
-            );
+                .withPack(packId);
+
+            item.addGenerator(itemGenerator.build());
         }
 
         return item.build();

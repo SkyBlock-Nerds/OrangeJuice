@@ -1,20 +1,17 @@
 package net.hypixel.orangejuice.service.generator;
 
-import net.aerh.imagegenerator.image.GeneratorImageBuilder;
-import net.aerh.imagegenerator.image.MinecraftTooltip;
-import net.aerh.imagegenerator.impl.MinecraftPlayerHeadGenerator;
-import net.aerh.imagegenerator.impl.tooltip.MinecraftTooltipGenerator;
 import net.aerh.imagegenerator.item.GeneratedObject;
 import org.jetbrains.annotations.Nullable;
 
-public class SingleDialogueService {
+public class SingleDialogueService extends GeneratorService {
 
     public static GeneratedObject generate(
         String npcName,
         String[] dialogue,
         @Nullable Integer maxLineLength,
         @Nullable Boolean abiphone,
-        @Nullable String skinValue
+        @Nullable String skinValue,
+        @Nullable String texturePack
     ) {
         abiphone = abiphone != null && abiphone;
         maxLineLength = maxLineLength == null ? 91 : maxLineLength;
@@ -34,26 +31,6 @@ public class SingleDialogueService {
             }
         }
 
-        MinecraftTooltipGenerator.Builder tooltipGenerator = new MinecraftTooltipGenerator.Builder()
-            .withItemLore(String.join("\n", dialogue))
-            .withAlpha(0)
-            .withRenderBorder(false)
-            .withPadding(MinecraftTooltip.DEFAULT_PADDING)
-            .hasFirstLinePadding(false)
-            .withMaxLineLength(maxLineLength)
-            .bypassMaxLineLength(true);
-
-        GeneratorImageBuilder generatorImageBuilder = new GeneratorImageBuilder()
-            .addGenerator(tooltipGenerator.build());
-
-        if (skinValue != null) {
-            MinecraftPlayerHeadGenerator playerHeadGenerator = new MinecraftPlayerHeadGenerator.Builder()
-                .withSkin(skinValue)
-                .withScale(-2)
-                .build();
-            generatorImageBuilder.addGenerator(0, playerHeadGenerator);
-        }
-
-        return generatorImageBuilder.build();
+        return internalGenerateDialogue(dialogue, maxLineLength, skinValue, texturePack);
     }
 }

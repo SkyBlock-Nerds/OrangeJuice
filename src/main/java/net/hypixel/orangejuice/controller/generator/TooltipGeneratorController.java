@@ -39,7 +39,9 @@ public class TooltipGeneratorController {
                     request.getPaddingFirstLine(),
                     request.getMaxLineLength(),
                     request.getTooltipSide(),
-                    request.getRenderBorder()
+                    request.getRenderBorder(),
+                    request.getTexturePack(),
+                    request.getTooltipStyle()
                 )
             );
         } catch (Exception exception) {

@@ -25,12 +25,14 @@ public class InventoryGeneratorController {
         try {
             return HttpUtil.properApiImageReturn(
                 InventoryService.generate(
-                    InventoryItem.toStringFromArray(request.getInventoryItems()), // TODO: this should be done lower down the stack but too lazy to do it now (also dont understand the code fully)
+                    InventoryItem.toStringFromArray(request.getInventoryItems()),
                     request.getRows(),
                     request.getColumns(),
                     request.getHoveredItemString(),
                     request.getContainerName(),
-                    request.getRenderBorder()
+                    request.getRenderBorder(),
+                    request.getTexturePack(),
+                    request.getTooltipStyle()
                 )
             );
         } catch (Exception exception) {

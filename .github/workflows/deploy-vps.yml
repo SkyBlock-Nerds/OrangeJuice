@@ -30,6 +30,10 @@ on:
         description: "The environment the secrets and vars will be pulled from:"
         type: environment
         required: true
+      mcPacksFolder:
+        description: "The path at which the texture packS folder is located (can't contain spaces):" # intentional capital 'S'
+        type: string
+        required: false
   push:
     branches:
       - 'main'
@@ -43,6 +47,7 @@ env:
   CONTAINER_NAME: orange-juice-${{ github.event.inputs.environmentType || 'PRODUCTION' }}-${{ github.ref_name }}
   OUTER_PORT: ${{ github.event.inputs.outerPort || '8080' }}
   USE_OLD_IMAGE: ${{ github.event.inputs.useOldImage || 'false' }}
+  MC_PACKS_FOLDER: ${{ github.event.inputs.mcPacksFolder || vars.MC_PACKS_FOLDER }}
 
 permissions:
   contents: read
@@ -92,6 +97,11 @@ jobs:
       - name: Deploy
         run: |
           ssh ${{ vars.SSH_USER }}@${{ vars.SSH_HOST }} << 'EOF'
+          VOLUME_ARG=""
+          if [ -n "${{ env.MC_PACKS_FOLDER }}" ]; then
+            VOLUME_ARG="-v ${{ env.MC_PACKS_FOLDER }}:/app/packs"
+          fi
+
           echo "${{ secrets.GITHUB_TOKEN }}" | sudo docker login ${{ env.REGISTRY }} -u ${{ github.actor }} --password-stdin
           sudo docker pull ${{ env.REGISTRY }}/$(echo "${{ env.IMAGE_NAME }}:latest" | tr '[:upper:]' '[:lower:]')
           sudo docker stop $(echo "${{ env.CONTAINER_NAME }}" | tr '[:upper:]' '[:lower:]' | tr '/' '-') || true
@@ -101,6 +111,7 @@ jobs:
             --name $(echo "${{ env.CONTAINER_NAME }}" | tr '[:upper:]' '[:lower:]' | tr '/' '-') \
             --restart unless-stopped \
             -p ${{ env.OUTER_PORT }}:8080 \
+            $VOLUME_ARG \
             ${{ env.REGISTRY }}/$(echo "${{ env.IMAGE_NAME }}:latest" | tr '[:upper:]' '[:lower:]')
           EOF
 

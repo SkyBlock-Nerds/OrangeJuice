@@ -29,7 +29,9 @@ public class TextGeneratorController {
                     request.getAlpha(),
                     request.getPadding(),
                     request.getMaxLineLength(),
-                    request.getRenderBorder()
+                    request.getRenderBorder(),
+                    request.getTexturePack(),
+                    request.getTooltipStyle()
                 )
             );
         } catch (Exception exception) {

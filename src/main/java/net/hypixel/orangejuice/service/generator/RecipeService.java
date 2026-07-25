@@ -3,13 +3,16 @@ package net.hypixel.orangejuice.service.generator;
 import net.aerh.imagegenerator.image.GeneratorImageBuilder;
 import net.aerh.imagegenerator.impl.MinecraftInventoryGenerator;
 import net.aerh.imagegenerator.item.GeneratedObject;
+import net.aerh.imagegenerator.pack.PackId;
+import net.hypixel.orangejuice.util.StringUtil;
 import org.jetbrains.annotations.Nullable;
 
-public class RecipeService {
+public class RecipeService extends GeneratorService {
 
     public static GeneratedObject generate(
         String recipe,
-        @Nullable Boolean renderBackground
+        @Nullable Boolean renderBackground,
+        @Nullable String texturePack
     ) {
         renderBackground = renderBackground == null || renderBackground;
 
@@ -20,6 +23,7 @@ public class RecipeService {
                 .drawBorder(false)
                 .drawBackground(renderBackground)
                 .withInventoryString(recipe)
+                .withPack(StringUtil.isNullOrBlank(texturePack) ? null : PackId.parse(texturePack))
                 .build())
             .build();
     }
