@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import net.hypixel.orangejuice.requestmodel.generator.submodels.InventoryItem;
 
-import static net.hypixel.orangejuice.requestmodel.ApiDocsConstants.RECIPE_DESCRIPTION;
+import static net.hypixel.orangejuice.requestmodel.ApiDocsConstants.*;
 
 @EqualsAndHashCode(callSuper = false)
 @Schema(description = "Request to generate a recipe")
@@ -17,4 +17,7 @@ public class RecipeGeneratorRequest {
 
     @Schema(description = "Whether to render the background", example = "true", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
     private Boolean renderBackground;
+
+    @Schema(description = TEXTURE_PACK_DESCRIPTION, example = TEXTURE_PACK_EXAMPLE, requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+    private String texturePack;
 }

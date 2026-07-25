@@ -6,17 +6,20 @@ import net.aerh.imagegenerator.image.MinecraftTooltip;
 import net.aerh.imagegenerator.impl.MinecraftPlayerHeadGenerator;
 import net.aerh.imagegenerator.impl.tooltip.MinecraftTooltipGenerator;
 import net.aerh.imagegenerator.item.GeneratedObject;
+import net.aerh.imagegenerator.pack.PackId;
 import net.hypixel.orangejuice.requestmodel.generator.submodels.MultiDialogueLine;
+import net.hypixel.orangejuice.util.StringUtil;
 import org.jetbrains.annotations.Nullable;
 
-public class MultiDialogueService {
+public class MultiDialogueService extends GeneratorService {
 
     public static GeneratedObject generate(
         String[] npcNames,
         MultiDialogueLine[] dialogue,
         @Nullable Integer maxLineLength,
         @Nullable Boolean abiphone,
-        @Nullable String skinValue
+        @Nullable String skinValue,
+        @Nullable String texturePack
     ) {
         abiphone = abiphone != null && abiphone;
         maxLineLength = maxLineLength == null ? 91 : maxLineLength;
@@ -42,26 +45,6 @@ public class MultiDialogueService {
             }
         }
 
-        MinecraftTooltipGenerator.Builder tooltipGenerator = new MinecraftTooltipGenerator.Builder()
-            .withItemLore(String.join("\n", lines))
-            .withAlpha(0)
-            .withRenderBorder(false)
-            .withPadding(MinecraftTooltip.DEFAULT_PADDING)
-            .hasFirstLinePadding(false)
-            .withMaxLineLength(maxLineLength)
-            .bypassMaxLineLength(true);
-
-        GeneratorImageBuilder generatorImageBuilder = new GeneratorImageBuilder()
-            .addGenerator(tooltipGenerator.build());
-
-        if (skinValue != null) {
-            MinecraftPlayerHeadGenerator playerHeadGenerator = new MinecraftPlayerHeadGenerator.Builder()
-                .withSkin(skinValue)
-                .withScale(-2)
-                .build();
-            generatorImageBuilder.addGenerator(0, playerHeadGenerator);
-        }
-
-        return generatorImageBuilder.build();
+        return internalGenerateDialogue(lines, maxLineLength, skinValue, texturePack);
     }
 }

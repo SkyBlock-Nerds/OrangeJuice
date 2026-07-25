@@ -28,7 +28,8 @@ public class ItemGeneratorController {
                     request.getData(),
                     request.getEnchanted(),
                     request.getHoverEffect(),
-                    request.getSkinValue()
+                    request.getSkinValue(),
+                        request.getTexturePack()
                 )
             );
         } catch (Exception exception) {

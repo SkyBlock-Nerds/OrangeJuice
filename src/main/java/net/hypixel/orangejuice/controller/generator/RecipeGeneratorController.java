@@ -26,7 +26,8 @@ public class RecipeGeneratorController {
             return HttpUtil.properApiImageReturn(
                 RecipeService.generate(
                     InventoryItem.toStringFromArray(request.getRecipe()),
-                    request.getRenderBackground()
+                    request.getRenderBackground(),
+                    request.getTexturePack()
                 )
             );
         } catch (Exception exception) {

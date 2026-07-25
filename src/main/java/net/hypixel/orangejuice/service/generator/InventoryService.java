@@ -5,9 +5,11 @@ import net.aerh.imagegenerator.image.MinecraftTooltip;
 import net.aerh.imagegenerator.impl.MinecraftInventoryGenerator;
 import net.aerh.imagegenerator.impl.tooltip.MinecraftTooltipGenerator;
 import net.aerh.imagegenerator.item.GeneratedObject;
+import net.aerh.imagegenerator.pack.PackId;
+import net.hypixel.orangejuice.util.StringUtil;
 import org.jetbrains.annotations.Nullable;
 
-public class InventoryService {
+public class InventoryService extends GeneratorService {
 
     public static GeneratedObject generate(
         @Nullable String inventoryString,
@@ -15,7 +17,9 @@ public class InventoryService {
         int slotsPerRow,
         @Nullable String hoveredItemString,
         @Nullable String containerName,
-        @Nullable Boolean drawBorder
+        @Nullable Boolean drawBorder,
+        @Nullable String texturePack,
+        @Nullable String tooltipStyle
     ) {
         drawBorder = drawBorder == null || drawBorder;
         inventoryString = inventoryString == null ? "" : inventoryString;
@@ -31,15 +35,21 @@ public class InventoryService {
                 .build());
 
         if (hoveredItemString != null) {
-            MinecraftTooltipGenerator tooltipGenerator = new MinecraftTooltipGenerator.Builder()
+            PackId packId = StringUtil.isNullOrBlank(texturePack) ? null : PackId.parse(texturePack);
+            MinecraftTooltipGenerator.Builder tooltipGenerator = new MinecraftTooltipGenerator.Builder()
                 .withItemLore(hoveredItemString)
                 .withAlpha(MinecraftTooltip.DEFAULT_ALPHA)
                 .withPadding(MinecraftTooltip.DEFAULT_PADDING)
                 .hasFirstLinePadding(false)
                 .withRenderBorder(true)
-                .build();
+                .withTooltipStyle(tooltipStyle)
+                .withPack(packId);
 
-            generatedObject.addGenerator(tooltipGenerator);
+            if (ShouldApplyHypixelSkyblockTextColor(packId)) {
+                tooltipGenerator = tooltipGenerator.withTextColorRemap(InventoryService.SKYBLOCK_TEXT_COLOR_REMAP);
+            }
+
+            generatedObject.addGenerator(tooltipGenerator.build());
         }
 
         return generatedObject.build();
