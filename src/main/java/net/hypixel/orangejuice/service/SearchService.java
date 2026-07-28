@@ -87,9 +87,10 @@ public class SearchService {
 
     public static List<PackId> texturePack(@Nullable String searchTerm) {
 
-        var unfiltered = PackRepository.global().registeredPacks();
+        var unfiltered = new ArrayList<>(PackRepository.global().registeredPacks());
+        unfiltered.add(PackId.VANILLA);
         if (StringUtil.isNullOrBlank(searchTerm))
-            return new ArrayList<>(unfiltered);
+            return unfiltered;
         @Nullable String finalSearchTerm = searchTerm.toLowerCase();
         return unfiltered.stream()
             .filter(p -> p.toString().toLowerCase().contains(finalSearchTerm))
