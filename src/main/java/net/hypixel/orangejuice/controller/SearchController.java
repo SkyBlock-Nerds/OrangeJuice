@@ -110,12 +110,12 @@ public class SearchController {
     }
 
     @Operation(summary = "Get all loaded texture packs")
-    @GetMapping("/texture-packs")
-    public ResponseEntity texturePacks(
+    @GetMapping("/texture-pack")
+    public ResponseEntity texturePack(
         @RequestParam(required = false) @Nullable String searchTerm
     ) {
         try {
-            return ResponseEntity.ok(SearchService.texturePacks(searchTerm));
+            return ResponseEntity.ok(SearchService.texturePack(searchTerm));
         } catch (Exception exception) {
             log.error("Encountered an error while getting texture packs", exception);
             return ResponseEntity.status(500).body("An error occurred while processing the request" + exception.getCause());
@@ -123,8 +123,8 @@ public class SearchController {
     }
 
     @Operation(summary = "Get all tooltip styles, effectively only works with a packId")
-    @GetMapping("/tooltip-styles")
-    public ResponseEntity tooltipStyles(
+    @GetMapping("/tooltip-style")
+    public ResponseEntity tooltipStyle(
         @RequestParam(required = false ) @Nullable String packId,
         @RequestParam(required = false) @Nullable String searchTerm
     )
