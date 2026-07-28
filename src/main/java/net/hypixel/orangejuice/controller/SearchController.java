@@ -17,13 +17,14 @@ import org.springframework.web.bind.annotation.RestController;
 @Tag(name = "Search", description = "APIs for searching items, rarities, tooltips, icons, stats, and gemstones")
 public class SearchController {
 
-    @Operation(summary = "Get item ids by search term")
+    @Operation(summary = "Get item ids by search term (note that pack item support isn't implemented yet)") // TODO remove pack item disclaimer when it is implemented
     @GetMapping("/item-id")
     public ResponseEntity itemIds(
-        @RequestParam(required = false) @Nullable String searchTerm
+        @RequestParam(required = false) @Nullable String searchTerm,
+        @RequestParam(required = false) @Nullable String packId
     ) {
         try {
-            return ResponseEntity.ok(SearchService.itemNames(searchTerm));
+            return ResponseEntity.ok(SearchService.itemNames(searchTerm, packId));
         } catch (Exception exception) {
             log.error("Encountered an error while getting item ids", exception);
             return ResponseEntity.status(500).body("An error occurred while processing the request" + exception.getCause());

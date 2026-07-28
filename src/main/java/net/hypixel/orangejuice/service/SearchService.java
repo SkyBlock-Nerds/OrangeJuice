@@ -14,12 +14,8 @@ import java.util.List;
 public class SearchService {
     // TODO run is null or blank check for searchterms not in the filter loops because bad of performance ofc aka copy tooltipStyle in code flow
 
-    public static List<String> itemNames(@Nullable String searchTerm) {
-//        var pr = PackRepository.global();
-//        var packIds = pr.registeredPacks();
-//        for (PackId packId : packIds) {
-//            // TODO add logic for adding pack items to the returned list and fetching id's
-//        }
+    public static List<String> itemNames(@Nullable String searchTerm, @Nullable String packId) {
+        // TODO add logic for adding pack items to the returned list and fetching id's
 
         return Spritesheet.getImageMap()
             .keySet()
