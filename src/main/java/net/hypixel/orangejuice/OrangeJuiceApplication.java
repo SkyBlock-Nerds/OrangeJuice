@@ -70,7 +70,7 @@ public class OrangeJuiceApplication {
             dirName.replace('_', ':'),
             PackSource.directory(
                 path,
-                new PackLimits(20000, 1024, 128, 1024 * 10)
+                new PackLimits(20000, 1024 * 5, 128, 1024 * 1024 * 10)
             )
         );
     }
