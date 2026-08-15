@@ -15,7 +15,7 @@
     <packaging>jar</packaging>
 
     <name>OrangeJuice</name>
-    <description>A HTTP API for interacting with Jigsaw</description>
+    <description>A HTTP API for interacting with Aerh's Minecraft Image Generator</description>
 
     <properties>
         <java.version>25</java.version>
@@ -78,9 +78,9 @@
         </dependency>
 
         <dependency>
-            <groupId>com.github.Aerhhh.jigsaw</groupId>
+            <groupId>com.github.Aerhhh</groupId>
             <artifactId>MinecraftImageGenerator</artifactId>
-            <version>e6e7bfc508</version>
+            <version>d811d72646</version>
         </dependency>
     </dependencies>
 

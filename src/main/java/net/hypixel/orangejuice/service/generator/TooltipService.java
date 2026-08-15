@@ -77,7 +77,7 @@ public class TooltipService extends GeneratorService {
                 generatorImageBuilder.addGenerator(new MinecraftItemGenerator.Builder()
                     .withItem(itemId)
                     .isEnchanted(enchanted)
-                    .isBigImage()
+                    // .isBigImage() TODO figure out where this went
                     .build());
             }
         }

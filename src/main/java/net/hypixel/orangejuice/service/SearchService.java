@@ -14,9 +14,10 @@ import java.util.List;
 
 public class SearchService {
     public static List<String> itemNames(@Nullable String searchTerm, @Nullable String packId) {
-        // TODO add logic for adding pack items to the returned list and fetching id's
-
-        var unfiltered = Spritesheet.getImageMap().keySet();
+        List<String> unfiltered = new ArrayList<>(Spritesheet.getImageMap().keySet());
+        if (!StringUtil.isNullOrBlank(packId) && !packId.equals(PackId.VANILLA.toString())) {
+            unfiltered.addAll(PackRepository.global().itemRefs(PackId.parse(packId)));
+        }
         if (StringUtil.isNullOrBlank(searchTerm))
             return new ArrayList<>(unfiltered);
         @Nullable String finalSearchTerm = searchTerm.toLowerCase();

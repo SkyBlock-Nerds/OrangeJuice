@@ -34,7 +34,7 @@ public class ItemService extends GeneratorService {
                 .withData(data)
                 .isEnchanted(enchanted)
                 .withHoverEffect(hoverEffect)
-                .isBigImage()
+                // .isBigImage() TODO figure out where this went
                 .withPack(packId);
 
             item.addGenerator(itemGenerator.build());
