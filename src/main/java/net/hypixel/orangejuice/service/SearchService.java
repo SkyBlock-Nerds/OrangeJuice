@@ -87,7 +87,6 @@ public class SearchService {
     }
 
     public static List<PackId> texturePack(@Nullable String searchTerm) {
-
         var unfiltered = new ArrayList<>(PackRepository.global().registeredPacks());
         unfiltered.add(PackId.VANILLA);
         if (StringUtil.isNullOrBlank(searchTerm))
