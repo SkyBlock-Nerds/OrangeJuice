@@ -28,7 +28,7 @@ public class ItemService extends GeneratorService {
                 .withSkin(skinValue)
                 .build());
         } else {
-            PackId packId = StringUtil.isNullOrBlank(texturePack) ? null : PackId.parse(texturePack);
+            PackId packId = getPackId(texturePack);
             MinecraftItemGenerator.Builder itemGenerator = new MinecraftItemGenerator.Builder()
                 .withItem(itemId)
                 .withData(data)
