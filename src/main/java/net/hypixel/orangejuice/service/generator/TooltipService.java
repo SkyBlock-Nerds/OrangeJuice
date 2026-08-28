@@ -44,7 +44,7 @@ public class TooltipService extends GeneratorService {
         renderBorder = renderBorder == null || renderBorder;
 
         GeneratorImageBuilder generatorImageBuilder = new GeneratorImageBuilder();
-        PackId packId = StringUtil.isNullOrBlank(texturePack) ? null : PackId.parse(texturePack);
+        PackId packId = getPackId(texturePack);
         MinecraftTooltipGenerator.Builder tooltipGenerator = new MinecraftTooltipGenerator.Builder()
             .withName(itemName)
             .withRarity(Rarity.byName(rarity))

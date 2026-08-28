@@ -30,7 +30,7 @@ public abstract class GeneratorService {
     }
 
     protected static GeneratedObject internalGenerateDialogue(String[] dialogue, @NotNull Integer maxLineLength, @Nullable String skinValue, @Nullable String texturePack) {
-        PackId packId = StringUtil.isNullOrBlank(texturePack) ? null : PackId.parse(texturePack);
+        PackId packId = getPackId(texturePack);
         MinecraftTooltipGenerator.Builder tooltipGenerator = new MinecraftTooltipGenerator.Builder()
             .withItemLore(String.join("\n", dialogue))
             .withAlpha(0)
@@ -57,5 +57,16 @@ public abstract class GeneratorService {
         }
 
         return generatorImageBuilder.build();
+    }
+
+    protected static @Nullable PackId getPackId(@Nullable String texturePack) {
+        PackId packId;
+        if (texturePack != null && texturePack.equals(PackId.VANILLA.toString())) {
+            packId = PackId.VANILLA;
+        }
+        else {
+            packId = StringUtil.isNullOrBlank(texturePack) ? null : PackId.parse(texturePack);
+        }
+        return packId;
     }
 }

@@ -27,7 +27,7 @@ public class TextService extends GeneratorService {
         renderBorder = renderBorder != null && renderBorder;
 
         GeneratorImageBuilder generatorImageBuilder = new GeneratorImageBuilder();
-        PackId packId = StringUtil.isNullOrBlank(texturePack) ? null : PackId.parse(texturePack);
+        PackId packId = getPackId(texturePack);
         MinecraftTooltipGenerator.Builder tooltipGenerator = new MinecraftTooltipGenerator.Builder()
             .withItemLore(text)
             .withAlpha(alpha)

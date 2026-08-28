@@ -35,7 +35,7 @@ public class InventoryService extends GeneratorService {
                 .build());
 
         if (hoveredItemString != null) {
-            PackId packId = StringUtil.isNullOrBlank(texturePack) ? null : PackId.parse(texturePack);
+            PackId packId = getPackId(texturePack);
             MinecraftTooltipGenerator.Builder tooltipGenerator = new MinecraftTooltipGenerator.Builder()
                 .withItemLore(hoveredItemString)
                 .withAlpha(MinecraftTooltip.DEFAULT_ALPHA)

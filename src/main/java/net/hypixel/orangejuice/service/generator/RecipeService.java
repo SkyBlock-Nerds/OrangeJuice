@@ -16,6 +16,8 @@ public class RecipeService extends GeneratorService {
     ) {
         renderBackground = renderBackground == null || renderBackground;
 
+        PackId packId = getPackId(texturePack);
+
         return new GeneratorImageBuilder()
             .addGenerator(new MinecraftInventoryGenerator.Builder()
                 .withRows(3)
@@ -23,7 +25,7 @@ public class RecipeService extends GeneratorService {
                 .drawBorder(false)
                 .drawBackground(renderBackground)
                 .withInventoryString(recipe)
-                .withPack(StringUtil.isNullOrBlank(texturePack) ? null : PackId.parse(texturePack))
+                .withPack(packId)
                 .build())
             .build();
     }
