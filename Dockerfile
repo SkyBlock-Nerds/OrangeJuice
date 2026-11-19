@@ -9,4 +9,4 @@ FROM eclipse-temurin:25-jdk-alpine
 WORKDIR /app
 COPY --from=builder /app/target/*.jar /app/OrangeJuice.jar
 EXPOSE 8080
-ENTRYPOINT ["sh", "-c", "exec java -Xms256m -Xmx1g -jar OrangeJuice.jar"]
+ENTRYPOINT ["sh", "-c", "exec java -Xms256m -Xmx3g -jar OrangeJuice.jar"]
