@@ -84,12 +84,15 @@ public class TooltipService extends GeneratorService {
         }
 
         if (!StringUtil.isNullOrBlank(recipe)) {
-            generatorImageBuilder.addGenerator(0, new MinecraftInventoryGenerator.Builder()
-                .withRows(3)
-                .withSlotsPerRow(3)
-                .drawBorder(renderBorder)
-                .withInventoryString(recipe)
-                .build()
+            generatorImageBuilder.addGenerator(
+                0,
+                new MinecraftInventoryGenerator.Builder()
+                    .withRows(3)
+                    .withSlotsPerRow(3)
+                    .drawBorder(renderBorder)
+                    .withInventoryString(recipe)
+                    .withPack(packId)
+                    .build()
             ).build();
         }
 
